@@ -1,4 +1,22 @@
 resources:
+  - id: mariadb_deployment
+    from: k8s/MariadbDeployment
+    input:
+      dns_name: mariadb-deployment
+      labels:
+        app: mariadb
+      container_name: mariadb
+      image: kollaglue/fedora-rdo-mariadb
+      db_password: mariadb
+
+  - id: mariadb_service
+    from: k8s/MariadbService
+    input:
+      dns_name: mariadb-service
+      port: mariadb_deployment::public_port
+      selector:
+        app: mariadb
+
   - id: keystone_config_map
     from: k8s/KeystoneConfigMap
     input:
