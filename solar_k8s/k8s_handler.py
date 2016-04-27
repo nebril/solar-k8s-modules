@@ -17,17 +17,14 @@ import shutil
 import tempfile
 import time
 
+import pykube.objects
+import yaml
+
 from solar.core.handlers.base import TempFileHandler
 from solar.core.log import log
 from solar import errors
-
-from pykube.config import KubeConfig
-from pykube.http import HTTPClient
-import pykube.objects
-
-import yaml
-
 from solar_k8s import jsondiff
+from solar_k8s.kube_utils import get_kube_api
 
 
 class K8S(TempFileHandler):
@@ -36,7 +33,7 @@ class K8S(TempFileHandler):
         super(K8S, self).__init__(resources, handlers)
 
     def action(self, resource, action_name):
-        api = HTTPClient(KubeConfig.from_file("~/.kube/config"))
+        api = get_kube_api(resource.transports()[0])
         log.debug('Executing %s %s',
                   action_name, resource.name)
 

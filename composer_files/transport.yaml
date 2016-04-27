@@ -1,6 +1,9 @@
 resources:
   - id: k8s_job_transport
     from: k8s-modules/transport_k8sjob
+    input:
+      host: kube-node-master::ip
+      port: kubelet-master::master_port
 
   - id: k8s_api
     from: resources/transports
@@ -8,3 +11,5 @@ resources:
       transports:
         - name: k8s_job_transport::name
           user: k8s_job_transport::user
+          host: k8s_job_transport::host
+          port: k8s_job_transport::port
