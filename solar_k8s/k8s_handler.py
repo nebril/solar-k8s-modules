@@ -18,11 +18,11 @@ import tempfile
 import time
 
 import pykube.objects
-import yaml
-
 from solar.core.handlers.base import TempFileHandler
 from solar.core.log import log
 from solar import errors
+import yaml
+
 from solar_k8s import jsondiff
 from solar_k8s.kube_utils import get_kube_api
 
